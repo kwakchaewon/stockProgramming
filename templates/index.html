@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+
+<style>
+/*
+**** css 작성법 ****
+id = 교유한 값 / name = "중복해서 사용가능"
+1) * : 전체선택자에 스타일 적용
+2) 태그 선택자: 특정 태그에 스타일 적용     [특정태그]{속성들}
+3) 클래스 선택자: 특정 클래스에 스타일 적용  .클래스이름{속성}
+4) id 선택자 : 특정 id에 스타일 적용       #아이디 이름{속성}
+5) 하위선택자 : 모든 하위요소에 스타일 적용   section p{속성}    섹션 안 p에 적용
+6) 자식선택자 : 바로 밑의 자식 요소까지 적용  section > p{속성}  섹션안 p중 자식에만 적용
+7) 그룹선택자 : 여러가지 한번에 묶어 스타일 적용 ,사용
+*/
+body{
+}
+
+#stockLst {
+    margin-top: 3%;margin-left: 10%;  list-style:none;font-size: 25px;
+}
+
+#bigDiv{
+    color: white; width: 100%; height: inherit
+}
+
+#title{
+    font-size: 60px;padding-left: 10%
+}
+
+#todayIs{
+    font-size: 50px; color: darkgray;padding-left: 10%
+}
+
+#searchFormInput{
+    width:85%; height: 100%; display: initial;
+}
+#searchBtN{
+    height: 100%
+}
+.longName{
+    padding-top:2px ;color: lightgrey; font-size:20px
+}
+li{
+    border-bottom: 0.01mm solid; padding-bottom: 10px; padding-top: 10px; width:90%
+}
+.priceIs{
+    float:right;
+}
+
+
+</style>
+
+<link>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<body style="height: 100%;background-color: #0f0f0f">
+<div id=bigDiv>
+    <div id=title>Stocks</div>
+    <div id=todayIs>November 30</div>
+    <form id=       class="form-inline" style="padding-left: 10%; height: 8%">
+        <input id=searchFormInput class="form-control" type="text" placeholder="SERACH" >
+        <button id=searchBtN class="btn btn-success" type="submit">
+            <i CLASS="glyphicon glyphicon-search"></i>
+        </button>
+    </form>
+
+    <ul id="stockLst" class="list-group">
+        <li>
+            TSLA
+            <div class="priceIs">585.76$</div>
+            <div class=longName>Tesla, Inc.</div>
+        </li>
+        <li>
+            AAPL
+            <div class="priceIs">116.59$</div>
+            <div class=longName>Apple Inc.</div><div class="priceIs"></div>
+        </li>
+        <li>AMZN
+            <div class="priceIs">3195.34$</div>
+            <div class=longName>Amazon.com, Inc.</div><div class="priceIs"></div>
+        </li>
+        <li>
+            BA
+            <div class="priceIs">216$</div>
+            <div class=longName>The Boeing Company</div><div class="priceIs"></div>
+        </li>
+        <li>
+            NIKE
+            <div class="priceIs">134$</div>
+            <div class=longName>NIKE, Inc.</div><div class="priceIs"></div>
+        </li>
+        <li>
+            Dal
+            <div class="priceIs">41$</div>
+            <div class=longName>Delta Air Lones, Inc.</div><div class="priceIs"></div>
+        </li>
+        <li>
+            KO
+            <div class="priceIs">51$</div>
+            <div class=longName>The Coca-Cola Company</div><div class="priceIs"></div>
+        </li>
+        <li>
+            MA
+            <div class="priceIs">339$</div>
+            <div class=longName>Mastercard Incorporated</div><div class="priceIs"></div>
+        </li>
+        <li>
+            V
+            <div class="priceIs">211$</div>
+            <div class=longName>Visa Inc.</div><div class="priceIs"></div>
+        </li>
+        <li>
+            SBUX
+            <div class="priceIs">98$</div>
+            <div class=longName>Starbucks Corporation</div><div class="priceIs"></div>
+        </li>
+        <li>
+            GOOGL
+            <div class="priceIs">1787$</div>
+            <div class=longName>Alphabet Inc.</div><div class="priceIs"></div>
+        </li>
+        <li>
+            Qcom
+            <div class="priceIs">148$</div>
+            <div class=longName>QUALCOM Incorporation</div><div class="priceIs"></div>
+        </li>
+        <li>
+            MSFT
+            <div class="priceIs">215$</div>
+            <div class=longName>Microsoft Corporation</div><div class="priceIs"></div>
+        </li>
+        <li>
+            DIS
+            <div class="priceIs">147$</div>
+            <div class=longName>The Walt Disney Company</div><div class="priceIs"></div>
+        </li>
+        <li>
+            NFLX
+            <div class="priceIs">491$</div>
+            <div class=longName>Netflix, Inc.</div><div class="priceIs"></div>
+        </li>
+        <li>
+            FB
+            <div class="priceIs">277$</div>
+            <div class=longName>Facebook ,Inc.</div><div class="priceIs"></div>
+        </li>
+        <li>
+            LULU
+            <div class="priceIs">365$</div>
+            <div class=longName>Lululemon  Athletic Inc.</div><div class="priceIs"></div>
+        </li>
+        <li>
+            NVDA
+            <div class="priceIs">530$</div>
+            <div class=longName>NVIDIA Corporation</div><div class="priceIs"></div>
+        </li>
+        <li>
+            AMD
+            <div class="priceIs">87$</div>
+            <div class=longName>Advanced Micro Devices, Inc.</div><div class="priceIs"></div>
+        </li>
+    </ul>
+</div>
+
+
+
+<!--<input class="btn btn-info" type="reset" value="Reset">-->
+<!--<button type="button" class="btn btn-dark">Dark</button>-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+</body>
+</html>
+

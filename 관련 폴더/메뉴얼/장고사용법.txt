@@ -1,0 +1,50 @@
+*** 장고 사용법 ***
+
+관련 자료: https://docs.djangoproject.com/ko/3.1/intro/tutorial01/
+
+1. 장고를 설치한다.
+2. 프로젝트 만들기: django-admin startproject [프로젝트 이름]
+3. 프로젝트 경로에서 cmd: python manage.py runserver
+4. server at [port] 에 뜬 포트 번호로 인터넷 접속한다
+
+
+
+
+
+장고란 무엇인가
+- 파이썬 기반 오픈소스 웹 어플리케이션 프레임 워크
+- db기반 웹사이트를 작성하는데 수고를 덜어준다
+-mvt 패턴을 사용한다
+ m: model 데이터를 다루는 영역으로 데이터베이스에 적용될 모델을 설계한다.
+ v: view 웹어플리케이션 상에서 데이터들이 처리되는 로직을 정의한다.
+ t: template 사용자가 보게될 페이지의 모습을 구성한다. html / css / javascript 를 이용하여 정적 웹페이지를 작성한다.
+
+
+앱 생성하기:
+
+1) 앱이란: 장고프로젝트를 구성하는 작은 단위
+
+2) 생성하는 법:
+ 1. python manage.py startapp [앱이름]
+ 2. settings.py > installed_apps 리스트에 앱 등록
+    '[앱이름].apps.[앱이름]config',
+
+ 3. templates 구성:
+ html파일을 만듦. (index라고 가정)
+
+ 4. views.py 에 함수 만듦
+ def index(request) return(request, 'index.html') : 요청이 들어오면 index.html을 뿌려주겠다.
+
+ 5. urls.py 에서	import.[앱이름].views 해줌
+ urlpatterns 리스트안에 path('', blogapp.views.index, name='index' ),
+ 첫번째 인자는 우리가 만든 블로그 홈페이지의 주소를 입력할때 아무것도 입력하지않았다는 뜻
+ 두번째 인자는 우리가 만든 index함수를 적용시킨다는 뜻
+ 세번째 인자는 함수를 적용시키고 이름을 명명하게 되면 html파일에서이값으로 url을 불러올수있다..?
+ 
+ 
+요약: 앱이란걸 만들고 설치된 앱 추가해주고(사용가능) 
+        앱안에는 views.py라는게 있는데 여기서 함수를 정의할수있어. 난 html을 뿌려주겠다는 함수를 정의했고
+        urls.py라는 곳에서 어떤 url을 쳐야지 (첫번째 인자) , 어디에 위치해 있는 함수를 실행시켜줄건지 (두번째 인자), 세번째는 몰라 시발
+
+
+
