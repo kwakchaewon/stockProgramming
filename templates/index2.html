@@ -5,9 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-{{ stock_info1.quote.symbol }}
-{{ stock_info2.quote.symbol }}
-{{ stock_info3.quote.symbol }}
-{{ stock_info4.quote.symbol }}
+{{stock_info.1.symbol}}
+<div>
+    <ul>
+        {% for stock in stock_info %}
+        <li>{{stock.symbol}}</li>
+        {% endfor %}
+    </ul>
+</div>
 </body>
 </html>
