@@ -68,100 +68,13 @@ li{
     </form>
 
     <ul id="stockLst" class="list-group">
+        {% for stock in stock_info %}
         <li>
-            TSLA
-            <div class="priceIs">585.76$</div>
-            <div class=longName>Tesla, Inc.</div>
+            {{stock.symbol}}
+            <div class="priceIs">{{stock.latestPrice}}</div>
+            <div class=longName>{{stock.cmpName}}</div>
         </li>
-        <li>
-            AAPL
-            <div class="priceIs">116.59$</div>
-            <div class=longName>Apple Inc.</div><div class="priceIs"></div>
-        </li>
-        <li>AMZN
-            <div class="priceIs">3195.34$</div>
-            <div class=longName>Amazon.com, Inc.</div><div class="priceIs"></div>
-        </li>
-        <li>
-            BA
-            <div class="priceIs">216$</div>
-            <div class=longName>The Boeing Company</div><div class="priceIs"></div>
-        </li>
-        <li>
-            NIKE
-            <div class="priceIs">134$</div>
-            <div class=longName>NIKE, Inc.</div><div class="priceIs"></div>
-        </li>
-        <li>
-            Dal
-            <div class="priceIs">41$</div>
-            <div class=longName>Delta Air Lones, Inc.</div><div class="priceIs"></div>
-        </li>
-        <li>
-            KO
-            <div class="priceIs">51$</div>
-            <div class=longName>The Coca-Cola Company</div><div class="priceIs"></div>
-        </li>
-        <li>
-            MA
-            <div class="priceIs">339$</div>
-            <div class=longName>Mastercard Incorporated</div><div class="priceIs"></div>
-        </li>
-        <li>
-            V
-            <div class="priceIs">211$</div>
-            <div class=longName>Visa Inc.</div><div class="priceIs"></div>
-        </li>
-        <li>
-            SBUX
-            <div class="priceIs">98$</div>
-            <div class=longName>Starbucks Corporation</div><div class="priceIs"></div>
-        </li>
-        <li>
-            GOOGL
-            <div class="priceIs">1787$</div>
-            <div class=longName>Alphabet Inc.</div><div class="priceIs"></div>
-        </li>
-        <li>
-            Qcom
-            <div class="priceIs">148$</div>
-            <div class=longName>QUALCOM Incorporation</div><div class="priceIs"></div>
-        </li>
-        <li>
-            MSFT
-            <div class="priceIs">215$</div>
-            <div class=longName>Microsoft Corporation</div><div class="priceIs"></div>
-        </li>
-        <li>
-            DIS
-            <div class="priceIs">147$</div>
-            <div class=longName>The Walt Disney Company</div><div class="priceIs"></div>
-        </li>
-        <li>
-            NFLX
-            <div class="priceIs">491$</div>
-            <div class=longName>Netflix, Inc.</div><div class="priceIs"></div>
-        </li>
-        <li>
-            FB
-            <div class="priceIs">277$</div>
-            <div class=longName>Facebook ,Inc.</div><div class="priceIs"></div>
-        </li>
-        <li>
-            LULU
-            <div class="priceIs">365$</div>
-            <div class=longName>Lululemon  Athletic Inc.</div><div class="priceIs"></div>
-        </li>
-        <li>
-            NVDA
-            <div class="priceIs">530$</div>
-            <div class=longName>NVIDIA Corporation</div><div class="priceIs"></div>
-        </li>
-        <li>
-            AMD
-            <div class="priceIs">87$</div>
-            <div class=longName>Advanced Micro Devices, Inc.</div><div class="priceIs"></div>
-        </li>
+        {% endfor %}
     </ul>
 </div>
 
