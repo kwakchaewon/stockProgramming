@@ -31,7 +31,6 @@ def index(request):
         except Exception as e:
             apiListValue=e
         apiList.append(apiListValue)
-    print(apiList)
 
     return render(request, 'index.html', {'stock_info': apiList})
 
