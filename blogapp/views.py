@@ -4,8 +4,8 @@ from django.shortcuts import render
 import requests
 import json
 import asyncio
-import aiohttp
-import callStockApi as CSA
+from urllib.request import Request, urlopen
+import asyncio
 
 sampleUrl = 'https://cloud.iexapis.com/stable/stock/aapl/book?token=pk_cc9d0be588704852a3e1b6e3c91b1e65'
 sampleDate = []
@@ -91,18 +91,45 @@ def index3(request):
     myStocks = ['aapl', 'qcom', 'tsla', 'amzn', 'amd', 'ba', 'dal', 'fb', 'googl', 'intc', 'ko', 'lulu', 'ma', 'msft',
                 'nflx', 'nke', 'nvda', 'sbux', 'tsm', 'uber', 'v']
 
-    for i in range(0, len(myStocks)):
-        stockUrl= 'https://cloud.iexapis.com/stable/stock/' +myStocks[i] + '/book?token=pk_cc9d0be588704852a3e1b6e3c91b1e65'
-        async def asynconnect():
-            async with aiohttp.ClientSession () as session:
-                async with session.get(stockUrl) as response:
-                    aa=await response.text()
-                    print(aa)
+    # 기존 비동기화 작업
+    # for i in range(0, len(myStocks)):
+    #     stockUrl= 'https://cloud.iexapis.com/stable/stock/' +myStocks[i] + '/book?token=pk_cc9d0be588704852a3e1b6e3c91b1e65'
+    #     async def asynconnect():
+    #         async with aiohttp.ClientSession () as session:
+    #             async with session.get(stockUrl) as response:
+    #                 aa=await response.text()
+    #                 print(aa)
+    #
+    #
+    #     loop = asyncio.new_event_loop()
+    #     asyncio.set_event_loop(loop)
+    #     loop.run_until_complete(asynconnect())
+    #     loop.close()
+
+    urls=[]
+    #비동기로 웹페이지 가져오기
+    for i in myStocks:
+        urls.append('https://cloud.iexapis.com/stable/stock/' +
+                    i+ '/book?token=pk_cc9d0be588704852a3e1b6e3c91b1e65')
+
+    async def fetch(url):
+        request2 = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        response = await loop.run_in_executor(None, urlopen, request2)
+        page = await loop.run_in_executor(None, response.read)
+        print(page)
+        return len(page)
+
+    async def main():
+        futures = [asyncio.ensure_future(fetch(url)) for url in urls]
+
+        result = await asyncio.gather(*futures)
+        print(result)
 
 
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        loop.run_until_complete(asynconnect())
-        loop.close()
+    loop=asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(main())
+    loop.close()
+
     print('로딩시간:'+str(time.time()-starttime))
     return render(request, 'index3.html', {'test': sampleDate})
