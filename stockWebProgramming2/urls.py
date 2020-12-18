@@ -15,10 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+
 import blogapp.views
 
+# path('/뒤에 나올 주소',실행될 함수이름,적용할 html)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', blogapp.views.index, name='index'),
     path('2', blogapp.views.index2, name='index2'),
+    path('3', blogapp.views.index3, name='index3'),
 ]
