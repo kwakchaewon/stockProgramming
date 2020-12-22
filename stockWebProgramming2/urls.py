@@ -22,6 +22,4 @@ import blogapp.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', blogapp.views.index, name='index'),
-    path('2', blogapp.views.index2, name='index2'),
-    path('3', blogapp.views.index3, name='index3'),
 ]
