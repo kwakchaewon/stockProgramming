@@ -16,38 +16,41 @@ id = 교유한 값 / name = "중복해서 사용가능"
 body{
 }
 
-#stockLst {
-    margin-top: 3%;margin-left: 10%;  list-style:none;font-size: 25px;
-}
-
 #bigDiv{
-    color: white; width: 100%; height: inherit
+    color: white; width: 100%;
 }
 
 #title{
-    font-size: 60px;padding-left: 10%
+    font-size: 30px;padding-left: 10%
 }
 
 #todayIs{
-    font-size: 50px; color: darkgray;padding-left: 10%
+    font-size: 20px; color: darkgray;padding-left: 10%; padding-bottom: 1%;
 }
 
-#searchFormInput{
-    width:85%; height: 100%; display: initial;
-}
-#searchBtN{
-    height: 100%
-}
-.longName{
-    padding-top:2px ;color: lightgrey; font-size:20px
-}
-li{
-    border-bottom: 0.01mm solid; padding-bottom: 10px; padding-top: 10px; width:90%
-}
-.priceIs{
-    float:right;
+#stockDiv{
+    background-color: #2E2E2E; color: white; height: inherit;
+
 }
 
+#stkSym{
+    padding-left: 10%; font-size: 50px; padding-top: 2%; padding-right: 2%;
+    float:left; display: inline-block;
+}
+
+#line{
+    border:0; height: 1px; background-color: gray;
+    margin-left: 10%;margin-right: 10%; margin-top:2%;
+}
+
+#stklongNm{
+    font-size: 30px; display: inline-block; margin-top: 4%; color:#BDBDBD
+}
+
+#crtZone{
+    color: black; font-size: 50px; background-color: white;
+    width:80%; height:40%; margin-left:10%
+}
 
 </style>
 
@@ -60,25 +63,14 @@ li{
 <div id=bigDiv>
     <div id=title>Stocks</div>
     <div id=todayIs>November 30</div>
-    <form id=       class="form-inline" style="padding-left: 10%; height: 8%">
-        <input id=searchFormInput class="form-control" type="text" placeholder="SERACH" >
-        <button id=searchBtN class="btn btn-success" type="submit">
-            <i CLASS="glyphicon glyphicon-search"></i>
-        </button>
-    </form>
-
-    <ul id="stockLst" class="list-group">
-        {% for stock in stock_info %}
-        <li>
-            {{stock.symbol}}
-            <div class="priceIs">{{stock.latestPrice}}</div>
-            <div class=longName>{{stock.cmpName}}</div>
-        </li>
-        {% endfor %}
-    </ul>
 </div>
 
-
+<div id=stockDiv>
+    <div id="stkSym">AAPL</div>
+    <div id="stklongNm">Apple Inc.</div>
+    <div><hr id="line"></div>
+    <div id="crtZone"><주식차트></div>
+</div>
 
 <!--<input class="btn btn-info" type="reset" value="Reset">-->
 <!--<button type="button" class="btn btn-dark">Dark</button>-->

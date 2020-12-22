@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+
+<style>
+/*
+**** css 작성법 ****
+id = 교유한 값 / name = "중복해서 사용가능"
+1) * : 전체선택자에 스타일 적용
+2) 태그 선택자: 특정 태그에 스타일 적용     [특정태그]{속성들}
+3) 클래스 선택자: 특정 클래스에 스타일 적용  .클래스이름{속성}
+4) id 선택자 : 특정 id에 스타일 적용       #아이디 이름{속성}
+5) 하위선택자 : 모든 하위요소에 스타일 적용   section p{속성}    섹션 안 p에 적용
+6) 자식선택자 : 바로 밑의 자식 요소까지 적용  section > p{속성}  섹션안 p중 자식에만 적용
+7) 그룹선택자 : 여러가지 한번에 묶어 스타일 적용 ,사용
+*/
+body{
+}
+
+#stockLst {
+    margin-top: 1%;margin-left: 10%;  list-style:none;font-size: 25px;
+}
+
+#bigDiv{
+    color: white; width: 100%; height: inherit
+}
+
+#title{
+    font-size: 60px;padding-left: 10%
+}
+
+#todayIs{
+    font-size: 50px; color: darkgray;padding-left: 10%; padding-bottom: 1%;
+}
+
+#searchFormInput{
+    width:85%; height: 100%; display: initial;
+}
+#searchBtN{
+    height: 100%
+}
+.longName{
+    padding-top:2px ;color: darkgrey; font-size:16px
+}
+li{
+    border-bottom: 0.01mm solid; padding-bottom: 10px; padding-top: 10px; width:90%
+}
+.priceIs{
+    float:right;
+}
+
+
+</style>
+
+<link>
+    <meta charset="UTF-8">
+    <title>stockList</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<body style="height: 100%;background-color: #0f0f0f">
+<div id=bigDiv>
+    <div id=title>Stocks</div>
+    <div id=todayIs>November 30</div>
+    <form id=       class="form-inline" style="padding-left: 10%; height: 8%">
+        <input id=searchFormInput class="form-control" type="text" placeholder="SERACH" >
+        <button id=searchBtN class="btn btn-success" type="submit">
+            <i CLASS="glyphicon glyphicon-search"></i>
+        </button>
+    </form>
+
+    <ul id="stockLst" class="list-group">
+        {% for stock in stock_info %}
+        <li>
+            {{stock.symbol}}
+            <div class="priceIs">{{stock.latestPrice}}</div>
+            <div class="longName">{{stock.cmpName}}</div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+
+<!--<input class="btn btn-info" type="reset" value="Reset">-->
+<!--<button type="button" class="btn btn-dark">Dark</button>-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+</body>
+</html>
+

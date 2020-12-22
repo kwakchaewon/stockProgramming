@@ -21,5 +21,5 @@ import blogapp.views
 # path('/뒤에 나올 주소',실행될 함수이름,적용할 html)
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', blogapp.views.index, name='index'),
+    path('', blogapp.views.goMainPage, name='index'),
 ]

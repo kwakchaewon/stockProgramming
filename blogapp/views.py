@@ -12,7 +12,7 @@ sampleDate = []
 
 
 # Create your views here.
-def index(request):
+def goMainPage(request):
 
     # *** 메인화면(즐겨찾기한 주식 조회화면) ***
 
@@ -82,4 +82,4 @@ def index(request):
     loop.close()
 
     print('로딩시간:'+str(time.time()-starttime))
-    return render(request, 'index.html', {'stock_info': apiList})
+    return render(request, 'mainPage.html', {'stock_info': apiList})
