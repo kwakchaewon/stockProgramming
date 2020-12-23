@@ -90,5 +90,21 @@ def goMainPage(request):
     return render(request, 'mainPage.html', {'stock_info': apiList})
 
 def goStockPage(request):
+    # apiListValue: 주식 정보들이 포함될 딕셔너리
+    apiListValue = {}
+
     symbol=request.GET.get("symbol")
-    return render(request, 'stockPage.html' )
+    api_request= requests.get(
+            'https://cloud.iexapis.com/stable/stock/' + symbol + '/book?token=pk_cc9d0be588704852a3e1b6e3c91b1e65')
+
+    try:
+        # AAPL / Apple Inc / 123.75$
+        apiListValue["symbol"] = json.loads(api_request.content)["quote"]["symbol"]
+        apiListValue["cmpName"] = json.loads(api_request.content)["quote"]["companyName"]
+        apiListValue["latestPrice"] = str(json.loads(api_request.content)["quote"]["latestPrice"]) + "$"
+
+    except Exception as e:
+        apiListValue=e
+
+    print(apiListValue)
+    return render(request, 'stockPage.html' ,{'stock_info': apiListValue})
