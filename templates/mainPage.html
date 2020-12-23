@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" style="height: 100%">
-
+<head>
+    <title></title>
 <style>
 /*
 **** css 작성법 ****
@@ -50,11 +51,17 @@ li{
 
 
 </style>
-
-<link>
+    <link>
     <meta charset="UTF-8">
     <title>stockList</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<script type="text/javascript">
+    function goStockPage(symbol){
+    alert(symbol);
+    location.href="stockpage?symbol="+symbol;
+}
+</script>
+
 </head>
 <body style="height: 100%;background-color: #0f0f0f">
 <div id=bigDiv>
@@ -69,7 +76,7 @@ li{
 
     <ul id="stockLst" class="list-group">
         {% for stock in stock_info %}
-        <li>
+        <li onclick="goStockPage('{{stock.symbol}}')">
             {{stock.symbol}}
             <div class="priceIs">{{stock.latestPrice}}</div>
             <div class="longName">{{stock.cmpName}}</div>
@@ -78,13 +85,9 @@ li{
     </ul>
 </div>
 
-
-
-<!--<input class="btn btn-info" type="reset" value="Reset">-->
-<!--<button type="button" class="btn btn-dark">Dark</button>-->
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery.min.js"></script>
-<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js">
+</script>
 </body>
 </html>
 

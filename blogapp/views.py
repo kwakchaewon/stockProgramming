@@ -86,5 +86,6 @@ def goMainPage(request):
     print('로딩시간:'+str(time.time()-starttime))
     return render(request, 'mainPage.html', {'stock_info': apiList})
 
-def goStockPage( request ):
-    return render(request,'stockPage.html')
+def goStockPage(request):
+    symbol=request.GET.get("symbol")
+    return render(request, 'stockPage.hStml' )
