@@ -58,8 +58,6 @@ def goMainPage(request):
         apiListValue["cmpName"] = jsonValues["quote"]["companyName"]
         apiListValue["latestPrice"] = str(jsonValues["quote"]["latestPrice"]) + "$"
         apiList.append(apiListValue)
-        print(jsonValues)
-        print("끝")
         return len(byteBuffer)
 
     ####
@@ -83,9 +81,14 @@ def goMainPage(request):
     loop.run_until_complete(main())
     loop.close()
 
-    print('로딩시간:'+str(time.time()-starttime))
+    print("#       #       #   #######   #         #####       #####       #         #   ###### ")
+    print(' #     # #     #   #         #        #      #    #      #     ##      ##   # ')
+    print('  #   #   #   #   #######   #        #           #       #    # #    # #   ######    ')
+    print('   # #     # #   #         #         #      #    #      #    #   # #  #   #    ')
+    print('    #	    #  #######   #######     #####       #####     #     #  #   ######  ')
+    print('Loading Time:'+str(time.time()-starttime))
     return render(request, 'mainPage.html', {'stock_info': apiList})
 
 def goStockPage(request):
     symbol=request.GET.get("symbol")
-    return render(request, 'stockPage.hStml' )
+    return render(request, 'stockPage.html' )
