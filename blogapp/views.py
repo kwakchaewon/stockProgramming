@@ -12,9 +12,9 @@ sampleDate = []
 
 
 # Create your views here.
-def goMainPage(request):
 
-    # *** 메인화면(즐겨찾기한 주식 조회화면) ***
+# *** 메인화면(즐겨찾기한 주식 조회화면) ***
+def goMainPage(request):
 
     starttime=time.time()
 
@@ -58,6 +58,8 @@ def goMainPage(request):
         apiListValue["cmpName"] = jsonValues["quote"]["companyName"]
         apiListValue["latestPrice"] = str(jsonValues["quote"]["latestPrice"]) + "$"
         apiList.append(apiListValue)
+        print(jsonValues)
+        print("끝")
         return len(byteBuffer)
 
     ####
@@ -83,3 +85,6 @@ def goMainPage(request):
 
     print('로딩시간:'+str(time.time()-starttime))
     return render(request, 'mainPage.html', {'stock_info': apiList})
+
+def goStockPage( request ):
+    return render(request,'stockPage.html')

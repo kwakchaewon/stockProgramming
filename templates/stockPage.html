@@ -38,7 +38,7 @@ body{
     float:left; display: inline-block;
 }
 
-#line{
+.line{
     border:0; height: 1px; background-color: gray;
     margin-left: 10%;margin-right: 10%; margin-top:2%;
 }
@@ -51,6 +51,38 @@ body{
     color: black; font-size: 50px; background-color: white;
     width:80%; height:40%; margin-left:10%
 }
+
+.simpleInfo{
+font-size: 30px;margin-left: 10%;
+}
+
+#closePrice{
+    border-right: solid white 1px;
+    width: 30%; display: inline-block;
+    float:left;
+
+}
+
+#exPrice{
+    margin-left:3%;
+    display: inline-block;
+}
+
+#stkInfo{
+    font-size: 25px; padding-left: 10%;
+}
+
+.leftInfo{
+    float:left;
+    display: inline-block;
+    width: 30%;
+}
+
+.rightInfo{
+    display: inline-block; width: 30%;
+}
+
+
 
 </style>
 
@@ -68,8 +100,20 @@ body{
 <div id=stockDiv>
     <div id="stkSym">AAPL</div>
     <div id="stklongNm">Apple Inc.</div>
-    <div><hr id="line"></div>
-    <div id="crtZone"><주식차트></div>
+    <div><hr class="line"></div>
+    <div>
+        <div class="simpleInfo" id="closePrice">현재 : 128.23$</div>
+        <div class="simpleInfo" id="exPrice">장외 :130.62$</div>
+    </div>
+    <div><hr class="line"></div>
+    <div id="crtZone">주식차트</div>
+    <div><hr class="line"></div>
+    <div id="stkInfo">
+        <div><div class="leftInfo">open:</div><div class="rightInfo">p/e:</div></div>
+        <div><div leftInfo class="leftInfo">low:</div><div class="rightInfo">시가총액:</div></div>
+        <div><div leftInfo class="leftInfo">high:</div><div class="rightInfo">vol:</div></div>
+    </div>
+
 </div>
 
 <!--<input class="btn btn-info" type="reset" value="Reset">-->
@@ -79,4 +123,4 @@ body{
 <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
 </body>
 </html>
-
+SSSS
