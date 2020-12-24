@@ -94,17 +94,47 @@ def goStockPage(request):
     apiListValue = {}
 
     symbol=request.GET.get("symbol")
-    api_request= requests.get(
+    api_request = requests.get(
             'https://cloud.iexapis.com/stable/stock/' + symbol + '/book?token=pk_cc9d0be588704852a3e1b6e3c91b1e65')
 
     try:
         # AAPL / Apple Inc / 123.75$
+        # apiListValue[symbol,companyName,종료주가,종료주가%,장외시간주가,장외주가%,open,low,high,시가총액,p/e,거래량]
         apiListValue["symbol"] = json.loads(api_request.content)["quote"]["symbol"]
         apiListValue["cmpName"] = json.loads(api_request.content)["quote"]["companyName"]
-        apiListValue["latestPrice"] = str(json.loads(api_request.content)["quote"]["latestPrice"]) + "$"
+        apiListValue["peRate"] = json.loads(api_request.content)["quote"]["peRatio"]
+
+
+        # 시가총액
+        mrkCap=(int(json.loads(api_request.content)["quote"]["marketCap"]))
+
+        if mrkCap>1000000000000:
+            mrkCap= str(round(mrkCap/1000000000000, 2))+"T"
+        elif mrkCap>1000000000:
+            mrkCap = str(round(mrkCap / 1000000000, 2)) + "B"
+        elif mrkCap>1000000:
+            mrkCap = str(round(mrkCap / 1000000, 2)) + "M"
+        apiListValue["mrkCap"] = mrkCap
+
+
+        # 어제 대비 주가 변화율
+        changePercent=str(round((json.loads(api_request.content)["quote"]["changePercent"]*100), 2))+"%"
+        apiListValue["changePer"] =changePercent
+
+        #현재 주가 (최근 조회된 주가)
+        latestPrice=str(round(json.loads(api_request.content)["quote"]["latestPrice"], 2)) + "$"
+        apiListValue["latestPrice"] = latestPrice
+
+        # 장외시간 주가(제대로 되는진 모르겠음)
+        apiListValue["exPrice"] = str(json.loads(api_request.content)["quote"]["extendedPrice"]) + "$"
+        apiListValue["extendedChangePercent"] = str(json.loads(api_request.content)["quote"]["extendedChangePercent"]) + "$"
+
+
+        ## 추가 예정일 값들 : 거래량, 종료주가, 종료주가 퍼센트, open, low, high
+        ## 추후 웹 크롤링 또는 정확한 값이 파악되면 추가될 예정
 
     except Exception as e:
         apiListValue=e
 
     print(apiListValue)
-    return render(request, 'stockPage.html' ,{'stock_info': apiListValue})
+    return render(request, 'stockPage.html', {'stock_info': apiListValue})
