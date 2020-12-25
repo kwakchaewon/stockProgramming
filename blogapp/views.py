@@ -118,8 +118,11 @@ def goStockPage(request):
 
 
         # 어제 대비 주가 변화율
-        changePercent=str(round((json.loads(api_request.content)["quote"]["changePercent"]*100), 2))+"%"
-        apiListValue["changePer"] =changePercent
+        # changePercent=str(round((json.loads(api_request.content)["quote"]["changePercent"]*100), 2))+"%"
+        # apiListValue["changePer"] =changePercent
+        changePercent = (round((json.loads(api_request.content)["quote"]["changePercent"] * 100), 2))
+        apiListValue["changePer"] = changePercent
+
 
         #현재 주가 (최근 조회된 주가)
         latestPrice=str(round(json.loads(api_request.content)["quote"]["latestPrice"], 2)) + "$"

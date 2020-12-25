@@ -40,7 +40,7 @@ body{
 
 .line{
     border:0; height: 1px; background-color: gray;
-    margin-left: 10%;margin-right: 10%; margin-top:2%;
+    margin-left: 10%;margin-right: 10%; margin-top:1%;margin-bottom: 1%;
 }
 
 #stklongNm{
@@ -86,10 +86,18 @@ font-size: 30px;margin-left: 10%;
     float:left
 }
 
-#changePer
+.changePer
 {
-    font-size: 25px; vertical-align: bottom; display: inline-table;
-    color: red; padding-left: 2%;
+    font-size: 30px; vertical-align: bottom; display: inline-table;
+     padding-left: 5%;
+}
+
+#changePlus{
+    color: red;
+}
+
+#changeMinus{
+    color: #01DF3A;
 }
 
 </style>
@@ -111,9 +119,15 @@ font-size: 30px;margin-left: 10%;
     <div><hr class="line"></div>
     <div>
         <div class="simpleInfo" id="closePrice">
-            <div id="latestPrice">현재 : {{stock_info.latestPrice}}</div><div id="changePer"> {{stock_info.changePer}}</div>
+            <div id="latestPrice">Now : {{stock_info.latestPrice}}</div>
+            {% if stock_info.changePer > 0 %}
+            <div id="changePlus" class="changePer"> +{{stock_info.changePer}}%</div>
+            {% else %}
+            <div id="changeMinus" class="changePer"> {{stock_info.changePer}}%</div>
+            {% endif %}
+
         </div>
-        <div class="simpleInfo" id="exPrice">장외 :{{stock_info.exPrice}}</div>
+        <div class="simpleInfo" id="exPrice">Extended :{{stock_info.exPrice}}</div>
     </div>
     <div><hr class="line"></div>
     <div id="crtZone">주식차트</div>
@@ -121,7 +135,7 @@ font-size: 30px;margin-left: 10%;
     <div id="stkInfo">
         <div>
             <div class="leftInfo">PER: {{stock_info.peRate}}</div>
-            <div class="rightInfo">시가총액: {{stock_info.mrkCap}}</div>
+            <div class="rightInfo">Market Cap: {{stock_info.mrkCap}}</div>
         </div>
 
 <!--        ### 값이 제대로 파악되지 않아서 나머지 값들은 추후에 추가될 예정-->
