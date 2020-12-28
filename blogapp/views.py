@@ -7,6 +7,8 @@ import asyncio
 from urllib.request import Request, urlopen
 import asyncio
 
+from stockWebProgramming2.oracleWork import select, select2
+
 sampleUrl = 'https://cloud.iexapis.com/stable/stock/aapl/book?token=pk_cc9d0be588704852a3e1b6e3c91b1e65'
 sampleDate = []
 
@@ -87,8 +89,13 @@ def goMainPage(request):
     print('   # #     # #   #         #         #      #    #      #    #   # #  #   #    ')
     print('    #	    #  #######   #######     #####       #####     #     #  #   ######  ')
     print('Loading Time:'+str(time.time()-starttime))
+
+
+    select2()
     return render(request, 'mainPage.html', {'stock_info': apiList})
 
+
+# *** 주식화면(주식 자세히 조회화면 ***)
 def goStockPage(request):
     # apiListValue: 주식 정보들이 포함될 딕셔너리
     apiListValue = {}
