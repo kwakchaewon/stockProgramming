@@ -34,6 +34,7 @@ def select2():
     sql="select * from MY_STOCK"
     cursor=db.cursor()
     cursor.execute(sql)
+    cursor.execute("select count(*) from MY_STOCK")
 
     for row in cursor:
         print(row)
