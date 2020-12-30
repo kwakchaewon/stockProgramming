@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" style="height: 100%">
-
+<head>
+    <title></title>
 <style>
 /*
 **** css 작성법 ****
@@ -45,6 +46,11 @@ body{
 
 #stklongNm{
     font-size: 30px; display: inline-block; margin-top: 4%; color:#BDBDBD
+}
+
+#starPoint{
+    font-size:60px; display: inline-block; float:right; padding-right: 10%;
+    padding-top: 1%; color: rgb(236,27,31);
 }
 
 #crtZone{
@@ -106,7 +112,32 @@ font-size: 30px;margin-left: 10%;
     <meta charset="UTF-8">
     <title>stockList</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+
+    <script type="text/javascript">
+        function clickStar(event){
+            var el=document.getElementById("starPoint")
+            var a=event.currentTarget
+            console.log(a)
+
+            // 빨간색이면 회색으로
+            if (el.style.color="rgb(236,67,31)") {
+                el.style.color = "rgb(215,215,214)"
+            }
+            // 회색이면 빨간색으로
+            else{
+                el.style.color="rgb(236,67,31)"
+            }
+
+
+        }
+
+
+
+    </script>
+
 </head>
+
 <body style="height: 100%;background-color: #0f0f0f">
 <div id=bigDiv>
     <div id=title>Stocks</div>
@@ -116,6 +147,7 @@ font-size: 30px;margin-left: 10%;
 <div id=stockDiv>
     <div id="stkSym">{{stock_info.symbol}}</div>
     <div id="stklongNm">{{stock_info.cmpName}}</div>
+    <div id="starPoint" onclick="clickStar()">★</div>
     <div><hr class="line"></div>
     <div>
         <div class="simpleInfo" id="closePrice">
