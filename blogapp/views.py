@@ -7,7 +7,7 @@ import asyncio
 from urllib.request import Request, urlopen
 import asyncio
 
-from stockWebProgramming2.oracleWork import select, select2
+from stockWebProgramming2.oracleWork import bringmyStocks
 
 sampleUrl = 'https://cloud.iexapis.com/stable/stock/aapl/book?token=pk_cc9d0be588704852a3e1b6e3c91b1e65'
 sampleDate = []
@@ -20,9 +20,10 @@ def goMainPage(request):
 
     starttime=time.time()
 
-    # 즐겨찾기한 목록 (예시 나중에는 오라클에서 가져올 예정)
-    myStocks = ['aapl', 'qcom', 'tsla', 'amzn', 'amd', 'ba', 'dal', 'fb', 'googl', 'intc', 'ko', 'lulu', 'ma', 'msft',
-                'nflx', 'nke', 'nvda', 'sbux', 'tsm', 'uber', 'v']
+    # 즐겨찾기한 목록 조회
+    # select stock_name from my_stock order by stock_name asc
+    myStocks = bringmyStocks()
+
 
     # apiList : html로 보내질 리스트 / value값들로 구성됨
     apiList = []
@@ -90,8 +91,6 @@ def goMainPage(request):
     print('    #	    #  #######   #######     #####       #####     #     #  #   ######  ')
     print('Loading Time:'+str(time.time()-starttime))
 
-
-    select2()
     return render(request, 'mainPage.html', {'stock_info': apiList})
 
 

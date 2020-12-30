@@ -3,42 +3,45 @@ import cx_Oracle
 # os.chdir('D:\instantclient-basic-windows.x64-19.9.0.0.0dbru\instantclient_19_9')
 # os.putenv('NLS_LANG','AMERICAN_AMERICAN.UTF8')
 
-
-#조회
-def select():
-    #db= cx_Oracle.connect("user","password","localhost:port/sid")
-    db = cx_Oracle.connect("ksh03003", "1234", "localhost:1521/orcl")
-
-    #cursor 객체 가져오기
-    cursor = db.cursor()
-
-    #oracle DB의 테이블 검색(SELECT)
-    #SQL문장 실행
-
-    sql="SELECT * FROM MY_STOCK"
-    cursor.execute(sql)
-
-    print("오라클 연결완료")
-    print(cursor.fetchone())
-    cursor.close()
-    db.close()
+####
+#
+# cx_Oracle 라이브러리를 사용하여 오라클 - 장고 연동
+#
+####
 
 
-def select2():
+# 파이썬에서 오라클과 DB연동을 할때 cx_Oracle 라이브러리는 SELECT 해오는 쿼리 결과가 tuple형태이다.
+# rowfactory 라는 메소드를 오버라디잉하여 리턴받는 데이터의 형태를 바꿀 수 있다.
+# cx_Oracle 로 가져온 데이터를 딕셔너리 형태로 반환
+def makeDictFactory(cursor):
+    columNames = [d[0] for d in cursor.description]
 
-    print("됐어1")
-    db=cx_Oracle.connect('ksh03003','1234','localhost:1521/orcl')
+    def createRow(*args):
+        return dict(zip(columNames, args))
+
+    return createRow
+
+
+
+## select STOCK_NAME from MY_STOCK
+def bringmyStocks():
+    MY_STOCKS = []
+
+    db = cx_Oracle.connect('ksh03003', '1234', 'localhost:1521/orcl')
 
     print('{}'.format(db.version))
 
-    sql="select * from MY_STOCK"
-    cursor=db.cursor()
-    cursor.execute(sql)
-    cursor.execute("select count(*) from MY_STOCK")
+    cursor = db.cursor()
+    cursor.execute("select stock_name from my_stock order by stock_name asc")
+    cursor.rowfactory=makeDictFactory(cursor)
+    rows = cursor.fetchall()
 
-    for row in cursor:
-        print(row)
+    for row in rows:
+        MY_STOCKS.append(row["STOCK_NAME"])
 
     cursor.close()
     db.close()
+
+    return MY_STOCKS
+
 
