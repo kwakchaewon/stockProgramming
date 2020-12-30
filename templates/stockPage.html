@@ -48,11 +48,19 @@ body{
     font-size: 30px; display: inline-block; margin-top: 4%; color:#BDBDBD
 }
 
-#starPoint{
+.starPoint{
     font-size:60px; display: inline-block; float:right; padding-right: 10%;
     padding-top: 1%; color: rgb(236,27,31);
 }
 
+#star1{
+    color: #EC431F;
+
+}
+
+#star2{
+    color: #D7D7D6;
+}
 #crtZone{
     color: black; font-size: 50px; background-color: white;
     width:80%; height:40%; margin-left:10%
@@ -147,7 +155,12 @@ font-size: 30px;margin-left: 10%;
 <div id=stockDiv>
     <div id="stkSym">{{stock_info.symbol}}</div>
     <div id="stklongNm">{{stock_info.cmpName}}</div>
-    <div id="starPoint" onclick="clickStar()">★</div>
+
+    {% if stock_info.isThere == 1 %}
+    <div id="star1" class="starPoint" onclick="clickStar()">★</div>
+    {% else %}
+    <div id="star2" class="starPoint" onclick="clickStar()">★</div>
+    {% endif %}
     <div><hr class="line"></div>
     <div>
         <div class="simpleInfo" id="closePrice">

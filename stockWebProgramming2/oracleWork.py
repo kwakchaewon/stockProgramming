@@ -41,7 +41,32 @@ def bringmyStocks():
 
     cursor.close()
     db.close()
-
+    print(MY_STOCKS)
     return MY_STOCKS
+
+
+## select COUNT(*) from my_stock where stock_name ='symbol';
+def isThere(symbol):
+    myBuffer = []
+
+    db = cx_Oracle.connect('ksh03003', '1234', 'localhost:1521/orcl')
+
+    print('{}'.format(db.version))
+
+    cursor = db.cursor()
+    
+    
+    # 문자열안에 따옴표 포함시키고싶을때 "\'": 백슬래쉬 따옴표
+    cursor.execute("select COUNT(*) from my_stock where stock_name =" + '\'' + symbol + '\'')
+    cursor.rowfactory = makeDictFactory(cursor)
+    rows = cursor.fetchall()
+
+    for row in rows:
+        myBuffer.append(row["COUNT(*)"])
+
+    cursor.close()
+    db.close()
+    return myBuffer
+
 
 

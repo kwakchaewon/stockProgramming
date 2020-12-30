@@ -7,7 +7,7 @@ import asyncio
 from urllib.request import Request, urlopen
 import asyncio
 
-from stockWebProgramming2.oracleWork import bringmyStocks
+from stockWebProgramming2.oracleWork import bringmyStocks, isThere
 
 sampleUrl = 'https://cloud.iexapis.com/stable/stock/aapl/book?token=pk_cc9d0be588704852a3e1b6e3c91b1e65'
 sampleDate = []
@@ -23,7 +23,6 @@ def goMainPage(request):
     # 즐겨찾기한 목록 조회
     # select stock_name from my_stock order by stock_name asc
     myStocks = bringmyStocks()
-
 
     # apiList : html로 보내질 리스트 / value값들로 구성됨
     apiList = []
@@ -96,6 +95,7 @@ def goMainPage(request):
 
 # *** 주식화면(주식 자세히 조회화면 ***)
 def goStockPage(request):
+
     # apiListValue: 주식 정보들이 포함될 딕셔너리
     apiListValue = {}
 
@@ -109,6 +109,9 @@ def goStockPage(request):
         apiListValue["symbol"] = json.loads(api_request.content)["quote"]["symbol"]
         apiListValue["cmpName"] = json.loads(api_request.content)["quote"]["companyName"]
         apiListValue["peRate"] = json.loads(api_request.content)["quote"]["peRatio"]
+
+        ## select COUNT(*) from my_stock where stock_name ='AAPL' 쿼리 값
+        apiListValue["isThere"] = isThere(symbol)[0]
 
 
         # 시가총액
