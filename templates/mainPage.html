@@ -17,6 +17,10 @@ id = 교유한 값 / name = "중복해서 사용가능"
 body{
 }
 
+#searchForm{
+    padding-left: 10%; height: 8%
+}
+
 #stockLst {
     margin-top: 1%;margin-left: 10%;  list-style:none;font-size: 25px;
 }
@@ -58,6 +62,19 @@ li{
     function goStockPage(symbol){
     location.href="stockpage?symbol="+symbol;
 }
+   function searchStockPage(){
+        var symbol=document.getElementById('searchFormInput').value
+        location.href="stockpage?symbol="+symbol;
+        }
+
+    function checkEnter(){
+        if (window.event.keyCode== 13)
+        {
+            event.preventDefault();
+            searchStockPage();
+        }
+    }
+
 </script>
 
 </head>
@@ -65,9 +82,10 @@ li{
 <div id=bigDiv>
     <div id=title>Stocks</div>
     <div id=todayIs>November 30</div>
-    <form id=       class="form-inline" style="padding-left: 10%; height: 8%">
-        <input id=searchFormInput class="form-control" type="text" placeholder="SERACH" >
-        <button id=searchBtN class="btn btn-success" type="submit">
+    <form id="searchForm" class="form-inline" action="/stockpage" method="get" target="_blank">
+        <input id="searchFormInput" class="form-control" type="text" placeholder="SERACH"
+        onkeydown="checkEnter()">
+        <button id=searchBtN class="btn btn-success" type="button" onclick="searchStockPage()">
             <i CLASS="glyphicon glyphicon-search"></i>
         </button>
     </form>
@@ -78,9 +96,9 @@ li{
             {{stock.symbol}}
             <div class="priceIs">{{stock.latestPrice}}</div>
             <div class="longName">{{stock.cmpName}}</div>
-        </li>
-        {% endfor %}
+        </li>        {% endfor %}
     </ul>
+
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery.min.js"></script>

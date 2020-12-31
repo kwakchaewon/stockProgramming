@@ -98,8 +98,7 @@ def goStockPage(request):
 
     # apiListValue: 주식 정보들이 포함될 딕셔너리
     apiListValue = {}
-
-    symbol=request.GET.get("symbol")
+    symbol = request.GET.get("symbol")
     api_request = requests.get(
             'https://cloud.iexapis.com/stable/stock/' + symbol + '/book?token=pk_cc9d0be588704852a3e1b6e3c91b1e65')
 
