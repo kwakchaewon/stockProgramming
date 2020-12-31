@@ -6,12 +6,15 @@ import json
 import asyncio
 from urllib.request import Request, urlopen
 import asyncio
+from datetime import datetime
 
 from stockWebProgramming2.oracleWork import bringmyStocks, isThere
 
 sampleUrl = 'https://cloud.iexapis.com/stable/stock/aapl/book?token=pk_cc9d0be588704852a3e1b6e3c91b1e65'
 sampleDate = []
 
+#오늘 날짜 : ex) Novermber 30
+todayIs = str(datetime.today().strftime("%B %d"))
 
 # Create your views here.
 
@@ -90,7 +93,7 @@ def goMainPage(request):
     print('    #	    #  #######   #######     #####       #####     #     #  #   ######  ')
     print('Loading Time:'+str(time.time()-starttime))
 
-    return render(request, 'mainPage.html', {'stock_info': apiList})
+    return render(request, 'mainPage.html', {'stock_info': apiList,'todayIs':todayIs})
 
 
 # *** 주식화면(주식 자세히 조회화면 ***)
@@ -148,4 +151,4 @@ def goStockPage(request):
         apiListValue=e
 
     print(apiListValue)
-    return render(request, 'stockPage.html', {'stock_info': apiListValue})
+    return render(request, 'stockPage.html', {'stock_info': apiListValue,'todayIs':todayIs})
