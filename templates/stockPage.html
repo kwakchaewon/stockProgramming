@@ -136,8 +136,12 @@ font-size: 30px;margin-left: 10%;
             else{
                 el.style.color="rgb(236,67,31)"
             }
+        }
 
 
+
+        function goToMainPage(){
+            location.href="mainPage"
         }
 
 
@@ -148,7 +152,7 @@ font-size: 30px;margin-left: 10%;
 
 <body style="height: 100%;background-color: #0f0f0f">
 <div id=bigDiv>
-    <div id=title>Stocks</div>
+    <div id=title onclick="goToMainPage()">Stocks</div>
     <div id=todayIs>{{todayIs}}</div>
 </div>
 
@@ -187,12 +191,10 @@ font-size: 30px;margin-left: 10%;
 <!--        <div><div class="leftInfo">open:</div><div class="rightInfo">PER: {{stock_info.peRate}}</div></div>-->
 <!--        <div><div leftInfo class="leftInfo">low:</div><div class="rightInfo">시가총액: {{stock_info.mrkCap}}</div></div>-->
 <!--        <div><div leftInfo class="leftInfo">high:</div><div class="rightInfo">vol:</div></div>-->
+
     </div>
 
 </div>
-
-<!--<input class="btn btn-info" type="reset" value="Reset">-->
-<!--<button type="button" class="btn btn-dark">Dark</button>-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>

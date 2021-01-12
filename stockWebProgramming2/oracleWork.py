@@ -22,7 +22,6 @@ def makeDictFactory(cursor):
     return createRow
 
 
-
 ## select STOCK_NAME from MY_STOCK
 def bringmyStocks():
     MY_STOCKS = []
