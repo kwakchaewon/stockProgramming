@@ -1,5 +1,4 @@
 import time
-
 from django.shortcuts import render
 import requests
 import json
@@ -8,7 +7,7 @@ from urllib.request import Request, urlopen
 import asyncio
 from datetime import datetime
 
-from stockWebProgramming2.oracleWork import bringmyStocks, isThere
+from stockWebProgramming2.oracleWork import bringmyStocks, isThere,insertInto_my_stock
 
 sampleUrl = 'https://cloud.iexapis.com/stable/stock/aapl/book?token=pk_cc9d0be588704852a3e1b6e3c91b1e65'
 sampleDate = []
@@ -20,6 +19,7 @@ todayIs = str(datetime.today().strftime("%B %d"))
 
 # *** 메인화면(즐겨찾기한 주식 조회화면) ***
 def goMainPage(request):
+    insertInto_my_stock()
 
     starttime=time.time()
 
