@@ -56,11 +56,16 @@ body{
 
 #star1{
     color: #EC431F;
-
+    background-color:#2E2E2E;
+    border:0;
+    outline: 0;
 }
 
 #star2{
     color: #D7D7D6;
+    background-color:#2E2E2E;
+    border:0;
+    outline: 0;
 }
 #crtZone{
     color: black; font-size: 50px; background-color: white;
@@ -140,17 +145,20 @@ font-size: 30px;margin-left: 10%;
     <div id="stklongNm">{{stock_info.cmpName}}</div>
 
     {% if stock_info.isThere == 1 %}
+    <div class="starPoint">
     <form method="get">
         <input type="hidden" value="{{stock_info.symbol}}" name="hiddenSymbol1">
-        <button type="submit" href="{% url 'stockPage' %}" class="starPoint" id="star1">★</button>
+        <button type="submit" href="{% url 'stockPage' %}" id="star1">★</button>
     </form>
+    </div>
 
     {% else %}
+    <div class="starPoint">
     <form method="get">
         <input type="hidden" value="{{stock_info.symbol}}" name="hiddenSymbol1">
-        <button type="submit" href="{% url 'stockPage' %}" class="starPoint" id="star2">★</button>
+        <button type="submit" href="{% url 'stockPage' %}" id="star2">★</button>
     </form>
-
+    </div>
     {% endif %}
     <div><hr class="line"></div>
     <div>
