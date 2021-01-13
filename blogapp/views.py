@@ -1,5 +1,8 @@
+import logging
 import time
-from django.shortcuts import render
+import traceback
+
+from django.shortcuts import render, redirect
 import requests
 import json
 import asyncio
@@ -7,7 +10,7 @@ from urllib.request import Request, urlopen
 import asyncio
 from datetime import datetime
 
-from stockWebProgramming2.oracleWork import bringmyStocks, isThere,insertInto_my_stock
+from stockWebProgramming2.oracleWork import bringmyStocks, isThere,insertInto_my_stock,delete_my_stock
 
 sampleUrl = 'https://cloud.iexapis.com/stable/stock/aapl/book?token=pk_cc9d0be588704852a3e1b6e3c91b1e65'
 sampleDate = []
@@ -19,7 +22,6 @@ todayIs = str(datetime.today().strftime("%B %d"))
 
 # *** 메인화면(즐겨찾기한 주식 조회화면) ***
 def goMainPage(request):
-    insertInto_my_stock()
 
     starttime=time.time()
 
@@ -101,54 +103,81 @@ def goStockPage(request):
 
     # apiListValue: 주식 정보들이 포함될 딕셔너리
     apiListValue = {}
-    symbol = request.GET.get("symbol")
-    api_request = requests.get(
-            'https://cloud.iexapis.com/stable/stock/' + symbol + '/book?token=pk_cc9d0be588704852a3e1b6e3c91b1e65')
+
 
     try:
-        # AAPL / Apple Inc / 123.75$
-        # apiListValue[symbol,companyName,종료주가,종료주가%,장외시간주가,장외주가%,open,low,high,시가총액,p/e,거래량]
-        apiListValue["symbol"] = json.loads(api_request.content)["quote"]["symbol"]
-        apiListValue["cmpName"] = json.loads(api_request.content)["quote"]["companyName"]
-        apiListValue["peRate"] = json.loads(api_request.content)["quote"]["peRatio"]
+        symbol = request.GET.get("symbol")
+        api_request = requests.get(
+            'https://cloud.iexapis.com/stable/stock/' + symbol + '/book?token=pk_cc9d0be588704852a3e1b6e3c91b1e65')
 
-        ## select COUNT(*) from my_stock where stock_name ='AAPL' 쿼리 값
-        apiListValue["isThere"] = isThere(symbol)[0]
+    except:
+        print('오류메시지')
+        # return redirect('goMainPage')
+        insertInto_my_stock()
+        return redirect('http://127.0.0.1:8000/')
 
-
-        # 시가총액
-        mrkCap=(int(json.loads(api_request.content)["quote"]["marketCap"]))
-
-        if mrkCap>1000000000000:
-            mrkCap= str(round(mrkCap/1000000000000, 2))+"T"
-        elif mrkCap>1000000000:
-            mrkCap = str(round(mrkCap / 1000000000, 2)) + "B"
-        elif mrkCap>1000000:
-            mrkCap = str(round(mrkCap / 1000000, 2)) + "M"
-        apiListValue["mrkCap"] = mrkCap
+    else:
 
 
-        # 어제 대비 주가 변화율
-        # changePercent=str(round((json.loads(api_request.content)["quote"]["changePercent"]*100), 2))+"%"
-        # apiListValue["changePer"] =changePercent
-        changePercent = (round((json.loads(api_request.content)["quote"]["changePercent"] * 100), 2))
-        apiListValue["changePer"] = changePercent
+        try:
+            # AAPL / Apple Inc / 123.75$
+            # apiListValue[symbol,companyName,종료주가,종료주가%,장외시간주가,장외주가%,open,low,high,시가총액,p/e,거래량]
+            apiListValue["symbol"] = json.loads(api_request.content)["quote"]["symbol"]
+            apiListValue["cmpName"] = json.loads(api_request.content)["quote"]["companyName"]
+            apiListValue["peRate"] = json.loads(api_request.content)["quote"]["peRatio"]
+
+            ## select COUNT(*) from my_stock where stock_name ='AAPL' 쿼리 값
+            apiListValue["isThere"] = isThere(symbol)[0]
+
+            # 시가총액
+            mrkCap = (int(json.loads(api_request.content)["quote"]["marketCap"]))
+
+            if mrkCap > 1000000000000:
+                mrkCap = str(round(mrkCap / 1000000000000, 2)) + "T"
+            elif mrkCap > 1000000000:
+                mrkCap = str(round(mrkCap / 1000000000, 2)) + "B"
+            elif mrkCap > 1000000:
+                mrkCap = str(round(mrkCap / 1000000, 2)) + "M"
+            apiListValue["mrkCap"] = mrkCap
+
+            # 어제 대비 주가 변화율
+            # changePercent=str(round((json.loads(api_request.content)["quote"]["changePercent"]*100), 2))+"%"
+            # apiListValue["changePer"] =changePercent
+            changePercent = (round((json.loads(api_request.content)["quote"]["changePercent"] * 100), 2))
+            apiListValue["changePer"] = changePercent
+
+            # 현재 주가 (최근 조회된 주가)
+            latestPrice = str(round(json.loads(api_request.content)["quote"]["latestPrice"], 2)) + "$"
+            apiListValue["latestPrice"] = latestPrice
+
+            # 장외시간 주가(제대로 되는진 모르겠음)
+            apiListValue["exPrice"] = str(json.loads(api_request.content)["quote"]["extendedPrice"]) + "$"
+            apiListValue["extendedChangePercent"] = str(
+                json.loads(api_request.content)["quote"]["extendedChangePercent"]) + "$"
+
+            ## 추가 예정일 값들 : 거래량, 종료주가, 종료주가 퍼센트, open, low, high
+            ## 추후 웹 크롤링 또는 정확한 값이 파악되면 추가될 예정
+
+        except Exception as e:
+            apiListValue = e
+
+        print(apiListValue)
+        return render(request, 'stockPage.html', {'stock_info': apiListValue, 'todayIs': todayIs})
 
 
-        #현재 주가 (최근 조회된 주가)
-        latestPrice=str(round(json.loads(api_request.content)["quote"]["latestPrice"], 2)) + "$"
-        apiListValue["latestPrice"] = latestPrice
-
-        # 장외시간 주가(제대로 되는진 모르겠음)
-        apiListValue["exPrice"] = str(json.loads(api_request.content)["quote"]["extendedPrice"]) + "$"
-        apiListValue["extendedChangePercent"] = str(json.loads(api_request.content)["quote"]["extendedChangePercent"]) + "$"
 
 
-        ## 추가 예정일 값들 : 거래량, 종료주가, 종료주가 퍼센트, open, low, high
-        ## 추후 웹 크롤링 또는 정확한 값이 파악되면 추가될 예정
 
-    except Exception as e:
-        apiListValue=e
 
-    print(apiListValue)
-    return render(request, 'stockPage.html', {'stock_info': apiListValue,'todayIs':todayIs})
+
+
+# *** 즐겨찾기 주식 추가(주식 자세히 redirect)
+def addMyStock(request):
+    insertInto_my_stock()
+    return redirect('goMainPage')
+
+
+# *** 즐겨찾기 주식 삭제(주식 자세히 redirect)
+def deleteMyStock(request):
+    delete_my_stock()
+    return redirect('goMainPage')
