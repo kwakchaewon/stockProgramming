@@ -67,25 +67,25 @@ def isThere(symbol):
     return myBuffer
 
 ## insert into my_stock values('stock_name');
-def insertInto_my_stock():
+def insertInto_my_stock(symbol):
 
     db = cx_Oracle.connect('ksh03003', '1234', 'localhost:1521/orcl')
     cursor = db.cursor()
 
     # 문자열안에 따옴표 포함시키고싶을때 "\'": 백슬래쉬 따옴표
-    cursor.execute("insert into my_stock values (" + '\''+"qcom" + '\''+")")
+    cursor.execute("insert into my_stock values (" + '\''+symbol + '\''+")")
 
     cursor.close()
     db.commit()
     db.close()
 
 ## delete from my_stock where stock_name='stock_name';
-def delete_my_stock():
+def delete_my_stock(symbol):
     db = cx_Oracle.connect('ksh03003', '1234', 'localhost:1521/orcl')
     cursor = db.cursor()
 
     # 문자열안에 따옴표 포함시키고싶을때 "\'": 백슬래쉬 따옴표
-    cursor.execute("delete from my_stock where stock_name=" + '\'' + "qcom" + '\'')
+    cursor.execute("delete from my_stock where stock_name=" + '\'' + symbol + '\'')
 
     cursor.close()
     db.commit()

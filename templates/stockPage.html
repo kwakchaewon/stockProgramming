@@ -51,7 +51,7 @@ body{
 
 .starPoint{
     font-size:60px; display: inline-block; float:right; padding-right: 10%;
-    padding-top: 1%; color: rgb(236,27,31);
+    padding-top: 1%; color: rgb(236,27,31); background-color:#2E2E2E;
 }
 
 #star1{
@@ -124,25 +124,6 @@ font-size: 30px;margin-left: 10%;
 
 
     <script type="text/javascript">
-        function clickStar(event){
-            // var el=document.getElementById("starPoint")
-            // var a=event.currentTarget
-            // console.log(a)
-            //
-            // // 빨간색이면 회색으로
-            // if (el.style.color="rgb(236,67,31)") {
-            //     el.style.color = "rgb(215,215,214)"
-            // }
-            // // 회색이면 빨간색으로
-            // else{
-            //     el.style.color="rgb(236,67,31)"
-            // }
-            location.href.
-        }
-
-
-
-
 
     </script>
 
@@ -159,14 +140,17 @@ font-size: 30px;margin-left: 10%;
     <div id="stklongNm">{{stock_info.cmpName}}</div>
 
     {% if stock_info.isThere == 1 %}
+    <form method="get">
+        <input type="hidden" value="{{stock_info.symbol}}" name="hiddenSymbol1">
+        <button type="submit" href="{% url 'stockPage' %}" class="starPoint" id="star1">★</button>
+    </form>
 
-        <a href="{% url 'stockPage' %}" >여기클릭</a>
-
-    <div id="star1" class="starPoint" onclick="clickStar()">★</div>
     {% else %}
+    <form method="get">
+        <input type="hidden" value="{{stock_info.symbol}}" name="hiddenSymbol1">
+        <button type="submit" href="{% url 'stockPage' %}" class="starPoint" id="star2">★</button>
+    </form>
 
-<!--        <a href="{% url 'mainPage' %}" id="star2">★</a>-->
-    <div id="star2" class="starPoint" onclick="clickStar()">★</div>
     {% endif %}
     <div><hr class="line"></div>
     <div>

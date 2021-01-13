@@ -104,7 +104,9 @@ def goStockPage(request):
     # apiListValue: 주식 정보들이 포함될 딕셔너리
     apiListValue = {}
 
-
+    ## 예외처리
+    # 1) except: 즐겨찾기 추가 버튼을 눌러 goStockPage를 호출한 경우 (메인페이지에서 눌러 symbol값을 들고오지 않아 api요청이 되지 않을 경우)
+    # 2) 그외 : 메인페이지에서 symbol값을 들고와 정상적으로 api가 호출된 경우
     try:
         symbol = request.GET.get("symbol")
         api_request = requests.get(
@@ -112,9 +114,17 @@ def goStockPage(request):
 
     except:
         print('오류메시지')
-        # return redirect('goMainPage')
-        insertInto_my_stock()
-        return redirect('http://127.0.0.1:8000/')
+
+        ## redirect할 symbol
+        symbolR = request.GET.get("hiddenSymbol1")
+
+        try:
+            insertInto_my_stock(symbolR)
+        except:
+            delete_my_stock(symbolR)
+        finally:
+            # return redirect('goMainPage')
+            return redirect('http://127.0.0.1:8000/stockpage?symbol='+symbolR)
 
     else:
 
