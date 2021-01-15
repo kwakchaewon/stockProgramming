@@ -44,6 +44,7 @@ def bringmyStocks():
     return MY_STOCKS
 
 
+
 ## select COUNT(*) from my_stock where stock_name ='symbol';
 def isThere(symbol):
     myBuffer = []
@@ -66,6 +67,8 @@ def isThere(symbol):
     db.close()
     return myBuffer
 
+
+
 ## insert into my_stock values('stock_name');
 def insertInto_my_stock(symbol):
 
@@ -79,6 +82,8 @@ def insertInto_my_stock(symbol):
     db.commit()
     db.close()
 
+
+
 ## delete from my_stock where stock_name='stock_name';
 def delete_my_stock(symbol):
     db = cx_Oracle.connect('ksh03003', '1234', 'localhost:1521/orcl')
@@ -90,6 +95,8 @@ def delete_my_stock(symbol):
     cursor.close()
     db.commit()
     db.close()
+
+
 
 
 

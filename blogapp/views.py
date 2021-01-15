@@ -95,7 +95,9 @@ def goMainPage(request):
     print('    #	    #  #######   #######     #####       #####     #     #  #   ######  ')
     print('Loading Time:'+str(time.time()-starttime))
 
-    return render(request, 'mainPage.html', {'stock_info': apiList,'todayIs':todayIs})
+    return render(request, 'mainPage.html', {'stock_info': apiList, 'todayIs': todayIs})
+
+
 
 
 # *** 주식화면(주식 자세히 조회화면 ***)
@@ -177,14 +179,11 @@ def goStockPage(request):
 
 
 
-
-
-
-
 # *** 즐겨찾기 주식 추가(주식 자세히 redirect)
 def addMyStock(request):
     insertInto_my_stock()
     return redirect('goMainPage')
+
 
 
 # *** 즐겨찾기 주식 삭제(주식 자세히 redirect)
