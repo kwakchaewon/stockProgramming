@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+
+#bigDiv{
+    color: white; width: 100%; background-color: #0f0f0f;
+}
+
+#title{
+    font-size: 30px;padding-left: 10%;
+    color: white; text-decoration: none;
+}
+
+#todayIs{
+    font-size: 20px; color: darkgray;padding-left: 10%; padding-bottom: 1%;
+}
+
+#stockDiv{
+    background-color: #2E2E2E; color: white; height: 100%;
+}
+
+#noResultZone{
+    padding-left: 10%;
+    font-size: 40px;
+    padding-top: 2%;
+}
+
+#SugZone{
+    padding-left: 10%;
+    font-size: 20px;
+}
+    </style>
+
+    <link>
+    <meta charset="UTF-8">
+    <title>stockList</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<script>
+</script>
+<body style="height: 100%; background-color:#2E2E2E">
+<div id=bigDiv>
+    <a id="title" href="{% url 'mainPage' %}">Stocks</a>
+    <div id=todayIs>{{todayIs}}</div>
+</div>
+<div id=stockDiv>
+    <p id="noResultZone">No result for " {{noneSymbol}} "</p>
+    <p id="SugZone">
+        <br>
+        Suggestions: <br><br>
+    ● You have to Enter symbol, not name. Please check your word.<br>
+    ● Make sure that all words are spelled correctly.<br>
+    ● Try different Symbol.<br>
+    ● Try more general keywords.
+
+
+    </p>
+    <p></p>
+
+</div>
+
+</body>
+</html>

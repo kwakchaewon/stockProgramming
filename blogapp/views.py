@@ -1,6 +1,7 @@
 import logging
 import time
 import traceback
+from urllib import response
 
 from django.shortcuts import render, redirect
 import requests
@@ -23,7 +24,7 @@ todayIs = str(datetime.today().strftime("%B %d"))
 # *** 메인화면(즐겨찾기한 주식 조회화면) ***
 def goMainPage(request):
 
-    starttime=time.time()
+    starttime = time.time()
 
     # 즐겨찾기한 목록 조회
     # select stock_name from my_stock order by stock_name asc
@@ -101,21 +102,22 @@ def goMainPage(request):
 
 
 # *** 주식화면(주식 자세히 조회화면 ***)
-def goStockPage(request):
+def goStockPage(request, render_to_response=None):
 
     # apiListValue: 주식 정보들이 포함될 딕셔너리
     apiListValue = {}
 
-    ## 예외처리
-    # 1) except: 즐겨찾기 추가 버튼을 눌러 goStockPage를 호출한 경우 (메인페이지에서 눌러 symbol값을 들고오지 않아 api요청이 되지 않을 경우)
-    # 2) 그외 : 메인페이지에서 symbol값을 들고와 정상적으로 api가 호출된 경우
+
     try:
         symbol = request.GET.get("symbol")
         api_request = requests.get(
             'https://cloud.iexapis.com/stable/stock/' + symbol + '/book?token=pk_cc9d0be588704852a3e1b6e3c91b1e65')
 
+
+    ## 1) except: 즐겨찾기 추가 버튼을 눌러 goStockPage를 호출한 경우
+    ## (메인페이지에서 눌러 symbol값을 들고오지 않아 api요청이 되지 않을 경우)
     except:
-        print('오류메시지')
+        print('api 전송에러')
 
         ## redirect할 symbol
         symbolR = request.GET.get("hiddenSymbol1")
@@ -128,53 +130,65 @@ def goStockPage(request):
             # return redirect('goMainPage')
             return redirect('http://127.0.0.1:8000/stockpage?symbol='+symbolR)
 
+
+    # 2) 그외 : 메인페이지에서 api가 호출된 경우
     else:
 
+        ## <Response [200]> : api 정상 호출 / 정상적으로 검색
+        ## <Response [404]> : 검색된 주식명이 없는 경우
+        if str(api_request) == "<Response [200]>":
 
-        try:
-            # AAPL / Apple Inc / 123.75$
-            # apiListValue[symbol,companyName,종료주가,종료주가%,장외시간주가,장외주가%,open,low,high,시가총액,p/e,거래량]
-            apiListValue["symbol"] = json.loads(api_request.content)["quote"]["symbol"]
-            apiListValue["cmpName"] = json.loads(api_request.content)["quote"]["companyName"]
-            apiListValue["peRate"] = json.loads(api_request.content)["quote"]["peRatio"]
+            try:
 
-            ## select COUNT(*) from my_stock where stock_name ='AAPL' 쿼리 값
-            apiListValue["isThere"] = isThere(symbol)[0]
+                # AAPL / Apple Inc / 123.75$
+                # apiListValue[symbol,companyName,종료주가,종료주가%,장외시간주가,장외주가%,open,low,high,시가총액,p/e,거래량]
+                apiListValue["symbol"] = json.loads(api_request.content)["quote"]["symbol"]
+                apiListValue["cmpName"] = json.loads(api_request.content)["quote"]["companyName"]
+                apiListValue["peRate"] = json.loads(api_request.content)["quote"]["peRatio"]
 
-            # 시가총액
-            mrkCap = (int(json.loads(api_request.content)["quote"]["marketCap"]))
+                ## select COUNT(*) from my_stock where stock_name ='AAPL' 쿼리 값
+                apiListValue["isThere"] = isThere(symbol)[0]
 
-            if mrkCap > 1000000000000:
-                mrkCap = str(round(mrkCap / 1000000000000, 2)) + "T"
-            elif mrkCap > 1000000000:
-                mrkCap = str(round(mrkCap / 1000000000, 2)) + "B"
-            elif mrkCap > 1000000:
-                mrkCap = str(round(mrkCap / 1000000, 2)) + "M"
-            apiListValue["mrkCap"] = mrkCap
+                # 시가총액
+                mrkCap = (int(json.loads(api_request.content)["quote"]["marketCap"]))
 
-            # 어제 대비 주가 변화율
-            # changePercent=str(round((json.loads(api_request.content)["quote"]["changePercent"]*100), 2))+"%"
-            # apiListValue["changePer"] =changePercent
-            changePercent = (round((json.loads(api_request.content)["quote"]["changePercent"] * 100), 2))
-            apiListValue["changePer"] = changePercent
+                if mrkCap > 1000000000000:
+                    mrkCap = str(round(mrkCap / 1000000000000, 2)) + "T"
+                elif mrkCap > 1000000000:
+                    mrkCap = str(round(mrkCap / 1000000000, 2)) + "B"
+                elif mrkCap > 1000000:
+                    mrkCap = str(round(mrkCap / 1000000, 2)) + "M"
+                apiListValue["mrkCap"] = mrkCap
 
-            # 현재 주가 (최근 조회된 주가)
-            latestPrice = str(round(json.loads(api_request.content)["quote"]["latestPrice"], 2)) + "$"
-            apiListValue["latestPrice"] = latestPrice
+                # 어제 대비 주가 변화율
+                # changePercent=str(round((json.loads(api_request.content)["quote"]["changePercent"]*100), 2))+"%"
+                # apiListValue["changePer"] =changePercent
+                changePercent = (round((json.loads(api_request.content)["quote"]["changePercent"] * 100), 2))
+                apiListValue["changePer"] = changePercent
 
-            # 장외시간 주가(제대로 되는진 모르겠음)
-            apiListValue["exPrice"] = str(json.loads(api_request.content)["quote"]["extendedPrice"]) + "$"
-            apiListValue["extendedChangePercent"] = str(
+                # 현재 주가 (최근 조회된 주가)
+                latestPrice = str(round(json.loads(api_request.content)["quote"]["latestPrice"], 2)) + "$"
+                apiListValue["latestPrice"] = latestPrice
+
+                # 장외시간 주가(제대로 되는진 모르겠음)
+                apiListValue["exPrice"] = str(json.loads(api_request.content)["quote"]["extendedPrice"]) + "$"
+                apiListValue["extendedChangePercent"] = str(
                 json.loads(api_request.content)["quote"]["extendedChangePercent"]) + "$"
 
-            ## 추가 예정일 값들 : 거래량, 종료주가, 종료주가 퍼센트, open, low, high
-            ## 추후 웹 크롤링 또는 정확한 값이 파악되면 추가될 예정
+                ## 추가 예정일 값들 : 거래량, 종료주가, 종료주가 퍼센트, open, low, high
+                ## 추후 웹 크롤링 또는 정확한 값이 파악되면 추가될 예정
 
-        except Exception as e:
-            apiListValue = e
+            except Exception as e:
+                apiListValue = e
 
-        print(apiListValue)
-        return render(request, 'stockPage.html', {'stock_info': apiListValue, 'todayIs': todayIs})
+            print(apiListValue)
+            return render(request, 'stockPage.html', {'stock_info': apiListValue, 'todayIs': todayIs})
+
+
+        ## 검색했을때 주식명이 없는경우 (aaaaa란 symbol을 검색했을때)
+        else:
+            return render(request, 'noSearchMsg.html', {'todayIs': todayIs, 'noneSymbol': symbol})
+
 
 
 
