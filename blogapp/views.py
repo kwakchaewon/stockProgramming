@@ -204,3 +204,4 @@ def addMyStock(request):
 def deleteMyStock(request):
     delete_my_stock()
     return redirect('goMainPage')
+

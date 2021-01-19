@@ -134,12 +134,9 @@ font-size: 30px;margin-left: 10%;
 
 </head>
 
-<body style="height: 100%;background-color: #0f0f0f">
-<div id=bigDiv>
-    <a id="title" href="{% url 'mainPage' %}">Stocks</a>
-    <div id=todayIs>{{todayIs}}</div>
-</div>
-
+<body>
+{% extends "stockBar.html" %}
+{% block content %}
 <div id=stockDiv>
     <div id="stkSym">{{stock_info.symbol}}</div>
     <div id="stklongNm">{{stock_info.cmpName}}</div>
@@ -190,6 +187,7 @@ font-size: 30px;margin-left: 10%;
     </div>
 
 </div>
+{% endblock %}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>

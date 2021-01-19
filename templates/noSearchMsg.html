@@ -6,19 +6,6 @@
 
     <style>
 
-#bigDiv{
-    color: white; width: 100%; background-color: #0f0f0f;
-}
-
-#title{
-    font-size: 30px;padding-left: 10%;
-    color: white; text-decoration: none;
-}
-
-#todayIs{
-    font-size: 20px; color: darkgray;padding-left: 10%; padding-bottom: 1%;
-}
-
 #stockDiv{
     background-color: #2E2E2E; color: white; height: 100%;
 }
@@ -42,11 +29,10 @@
 </head>
 <script>
 </script>
-<body style="height: 100%; background-color:#2E2E2E">
-<div id=bigDiv>
-    <a id="title" href="{% url 'mainPage' %}">Stocks</a>
-    <div id=todayIs>{{todayIs}}</div>
-</div>
+<body>
+{% extends "stockBar.html" %}
+
+{% block content %}
 <div id=stockDiv>
     <p id="noResultZone">No result for " {{noneSymbol}} "</p>
     <p id="SugZone">
@@ -56,12 +42,9 @@
     ● Make sure that all words are spelled correctly.<br>
     ● Try different Symbol.<br>
     ● Try more general keywords.
-
-
     </p>
     <p></p>
-
 </div>
-
+{%endblock%}
 </body>
 </html>

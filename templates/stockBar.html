@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #bigDiv{
+    color: white; width: 100%; background-color: #0f0f0f;
+    }
+
+    #todayIs{
+    font-size: 20px; color: darkgray;padding-left: 10%; padding-bottom: 1%;
+    }
+
+    #title{
+    font-size: 30px;padding-left: 10%;
+    color: white; text-decoration: none;
+    }
+</style>
+
+<body style="height: 100%; background-color:#2E2E2E">
+
+<div id=bigDiv>
+    <a id="title" href="{% url 'mainPage' %}">Stocks</a>
+    <div id=todayIs>{{todayIs}}</div>
+</div>
+{% block content%}
+{% endblock %}
+</body>
+</html>
