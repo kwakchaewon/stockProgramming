@@ -21,6 +21,10 @@
 p{
     text-align: -webkit-center; font-size: 30px
 }
+
+input{
+    color: black;
+}
 </style>
 <body>
 {% extends "stockBar.html" %}
@@ -28,7 +32,8 @@ p{
 {% block content %}
 <div class="loginContainer">
     <p>SIGN UP!</p>
-    <form action="">
+    <form action="{% url 'signup' %}" method="post">
+        {% csrf_token %}
         User ID:
         <br>
         <input name="userId" type="text">
