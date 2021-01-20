@@ -17,4 +17,6 @@ def login(request):
     todayIs = str(datetime.today().strftime("%B %d"))
 
 
+
+
     return render(request, 'login.html', {'todayIs': todayIs})
