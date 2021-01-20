@@ -17,10 +17,13 @@ from django.contrib import admin
 from django.urls import path
 
 import blogapp.views
+import accounts.views
 
 # path('/뒤에 나올 주소',실행될 함수이름,html에서 적용될 이름)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', blogapp.views.goMainPage, name='mainPage'),
     path('stockpage', blogapp.views.goStockPage, name='stockPage'),
+    path('signup',accounts.views.signup,name='signup'),
+    path('login',accounts.views.login,name='login'),
 ]

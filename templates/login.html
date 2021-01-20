@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<style>
+.loginContainer{
+    color: white;
+    position: absolute;
+    top: 15%; left: 40%;
+    /*border: solid 1px gray;*/
+}
+
+form{
+    font-size: 26px;
+}
+
+p{
+    text-align: -webkit-center; font-size: 30px
+}
+
+</style>
+<body>
+{% extends "stockBar.html" %}
+{% block content %}
+<div class="loginContainer">
+    <p>WELCOME</p>
+    <form action="">
+        User ID:
+        <br>
+        <input name="userId" type="text">
+        <br>
+        Password:
+        <br>
+        <input name="userPwd" type="password">
+        <br><br>
+        <input type="submit" class="btn btn-primary" value="Login">
+        <input type="button" class="btn btn-default" value="Sign up">
+    </form>
+</div>
+{%endblock%}
+</body>
+</html>
