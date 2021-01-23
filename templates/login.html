@@ -30,7 +30,8 @@ input{
 {% block content %}
 <div class="loginContainer">
     <p>WELCOME</p>
-    <form action="">
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
         User ID:
         <br>
         <input name="userId" type="text">
