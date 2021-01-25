@@ -24,11 +24,16 @@ todayIs = str(datetime.today().strftime("%B %d"))
 # *** 메인화면(즐겨찾기한 주식 조회화면) ***
 def goMainPage(request):
 
+
+
+    #로그인 됐을 경우 아이디 쿠키값가져오기
+    cookyId = request.COOKIES.get('userId')
+
     starttime = time.time()
 
     # 즐겨찾기한 목록 조회
     # select stock_name from my_stock order by stock_name asc
-    myStocks = bringmyStocks()
+    myStocks = bringmyStocks(cookyId)
 
     # apiList : html로 보내질 리스트 / value값들로 구성됨
     apiList = []

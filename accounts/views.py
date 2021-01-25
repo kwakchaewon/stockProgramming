@@ -30,7 +30,6 @@ def signup(request):
 
 
 
-
 def login(request):
     # 오늘 날짜 : ex) Novermber 30
     todayIs = str(datetime.today().strftime("%B %d"))

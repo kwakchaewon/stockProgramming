@@ -23,7 +23,7 @@ def makeDictFactory(cursor):
 
 
 ## select STOCK_NAME from MY_STOCK
-def bringmyStocks():
+def bringmyStocks(cookyId):
     MY_STOCKS = []
 
     db = cx_Oracle.connect('ksh03003', '1234', 'localhost:1521/orcl')
@@ -31,8 +31,8 @@ def bringmyStocks():
     print('{}'.format(db.version))
 
     cursor = db.cursor()
-    cursor.execute("select stock_name from my_stock order by stock_name asc")
-    cursor.rowfactory=makeDictFactory(cursor)
+    cursor.execute("select stock_name from my_stock where writer="+ '\''+ cookyId +  '\'' +"order by stock_name asc")
+    cursor.rowfactory = makeDictFactory(cursor)
     rows = cursor.fetchall()
 
     for row in rows:
