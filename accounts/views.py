@@ -15,12 +15,12 @@ def signup(request):
     if request.method == "POST":
         if request.POST["userPwd1"] == request.POST["userPwd2"]:
             user = User.objects.create_user(
-            username = request.POST["userId"], password=request.POST["userPwd1"])
+            username =request.POST["userId"], password=request.POST["userPwd1"])
             auth.login(request, user)
 
 
             ## 회원가입 성공 => 메인화면으로
-            return redirect('http://127.0.0.1:8000/')
+            return redirect('http://127.0.0.1:8000/login')
 
         ## 비밀번호 / 비밀번호 확인 다름 => signup로 되돌아감
         return render(request, 'signup.html', {'todayIs': todayIs})
