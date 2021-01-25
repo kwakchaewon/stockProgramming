@@ -104,7 +104,7 @@ def login(request):
 
 
 def logout(request):
-    response = redirect('http://127.0.0.1:8000/')
+    response = redirect('http://127.0.0.1:8000/login')
     response.delete_cookie('userId')
     response.delete_cookie('userPwd')
     auth.logout(request)

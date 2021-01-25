@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', blogapp.views.goMainPage, name='mainPage'),
     path('stockpage', blogapp.views.goStockPage, name='stockPage'),
-    path('signup',accounts.views.signup,name='signup'),
-    path('login',accounts.views.login,name='login'),
+    path('signup', accounts.views.signup, name='signup'),
+    path('login', accounts.views.login, name='login'),
+    path('logout', accounts.views.logout, name="logout"),
 ]
