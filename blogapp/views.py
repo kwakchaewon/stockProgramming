@@ -19,14 +19,14 @@ sampleDate = []
 #오늘 날짜 : ex) Novermber 30
 todayIs = str(datetime.today().strftime("%B %d"))
 
+
+
 # Create your views here.
 
 # *** 메인화면(즐겨찾기한 주식 조회화면) ***
 def goMainPage(request):
 
-
-
-    #로그인 됐을 경우 아이디 쿠키값가져오기
+    # 로그인 됐을 경우 아이디 쿠키값가져오기
     cookyId = request.COOKIES.get('userId')
 
     starttime = time.time()
@@ -109,6 +109,9 @@ def goMainPage(request):
 # *** 주식화면(주식 자세히 조회화면 ***)
 def goStockPage(request, render_to_response=None):
 
+    # 로그인 됐을 경우 아이디 쿠키값가져오기
+    cookyId = request.COOKIES.get('userId')
+
     # apiListValue: 주식 정보들이 포함될 딕셔너리
     apiListValue = {}
 
@@ -128,9 +131,9 @@ def goStockPage(request, render_to_response=None):
         symbolR = request.GET.get("hiddenSymbol1")
 
         try:
-            insertInto_my_stock(symbolR)
+            insertInto_my_stock(symbolR, cookyId)
         except:
-            delete_my_stock(symbolR)
+            delete_my_stock(symbolR, cookyId)
         finally:
             # return redirect('goMainPage')
             return redirect('http://127.0.0.1:8000/stockpage?symbol='+symbolR)
@@ -152,7 +155,7 @@ def goStockPage(request, render_to_response=None):
                 apiListValue["peRate"] = json.loads(api_request.content)["quote"]["peRatio"]
 
                 ## select COUNT(*) from my_stock where stock_name ='AAPL' 쿼리 값
-                apiListValue["isThere"] = isThere(symbol)[0]
+                apiListValue["isThere"] = isThere(symbol, cookyId)[0]
 
                 # 시가총액
                 mrkCap = (int(json.loads(api_request.content)["quote"]["marketCap"]))
@@ -198,15 +201,25 @@ def goStockPage(request, render_to_response=None):
 
 
 
-# *** 즐겨찾기 주식 추가(주식 자세히 redirect)
-def addMyStock(request):
-    insertInto_my_stock()
-    return redirect('goMainPage')
+## 쓰는곳 없으면 없애도 될듯?
 
-
-
-# *** 즐겨찾기 주식 삭제(주식 자세히 redirect)
-def deleteMyStock(request):
-    delete_my_stock()
-    return redirect('goMainPage')
+# # *** 즐겨찾기 주식 추가(주식 자세히 redirect)
+# def addMyStock(request):
+#
+#     # 로그인 됐을 경우 아이디 쿠키값가져오기
+#     cookyId = request.COOKIES.get('userId')
+#
+#     insertInto_my_stock()
+#     return redirect('goMainPage')
+#
+#
+#
+# # *** 즐겨찾기 주식 삭제(주식 자세히 redirect)
+# def deleteMyStock(request):
+#
+#     # 로그인 됐을 경우 아이디 쿠키값가져오기
+#     cookyId = request.COOKIES.get('userId')
+#
+#     delete_my_stock()
+#     return redirect('goMainPage')
 

@@ -22,7 +22,7 @@ def makeDictFactory(cursor):
     return createRow
 
 
-## select STOCK_NAME from MY_STOCK
+## select STOCK_NAME from MY_STOCK where writer = '[cookyId]' order by stock_name asc
 def bringmyStocks(cookyId):
     MY_STOCKS = []
 
@@ -31,7 +31,7 @@ def bringmyStocks(cookyId):
     print('{}'.format(db.version))
 
     cursor = db.cursor()
-    cursor.execute("select stock_name from my_stock where writer="+ '\''+ cookyId +  '\'' +"order by stock_name asc")
+    cursor.execute("select stock_name from my_stock where writer=" + '\''+cookyId + '\'' + "order by stock_name asc")
     cursor.rowfactory = makeDictFactory(cursor)
     rows = cursor.fetchall()
 
@@ -45,8 +45,8 @@ def bringmyStocks(cookyId):
 
 
 
-## select COUNT(*) from my_stock where stock_name ='symbol';
-def isThere(symbol):
+## select COUNT(*) from my_stock where stock_name ='[symbol]' and writer=[cookyId];
+def isThere(symbol, cookyId):
     myBuffer = []
 
     db = cx_Oracle.connect('ksh03003', '1234', 'localhost:1521/orcl')
@@ -56,7 +56,7 @@ def isThere(symbol):
     cursor = db.cursor()
 
     # 문자열안에 따옴표 포함시키고싶을때 "\'": 백슬래쉬 따옴표
-    cursor.execute("select COUNT(*) from my_stock where stock_name =" + '\'' + symbol + '\'')
+    cursor.execute("select COUNT(*) from my_stock where stock_name =" + '\'' + symbol + '\'' + "and writer=" + '\'' + cookyId +'\'')
     cursor.rowfactory = makeDictFactory(cursor)
     rows = cursor.fetchall()
 
@@ -69,14 +69,14 @@ def isThere(symbol):
 
 
 
-## insert into my_stock values('stock_name');
-def insertInto_my_stock(symbol):
+## insert into my_stock values([symbol],[cookyId]);
+def insertInto_my_stock(symbol, cookyId):
 
     db = cx_Oracle.connect('ksh03003', '1234', 'localhost:1521/orcl')
     cursor = db.cursor()
 
     # 문자열안에 따옴표 포함시키고싶을때 "\'": 백슬래쉬 따옴표
-    cursor.execute("insert into my_stock values (" + '\''+symbol + '\''+")")
+    cursor.execute("insert into my_stock values (" + '\''+symbol + '\''+","+'\'' + cookyId + '\'' + ")")
 
     cursor.close()
     db.commit()
@@ -84,13 +84,13 @@ def insertInto_my_stock(symbol):
 
 
 
-## delete from my_stock where stock_name='stock_name';
-def delete_my_stock(symbol):
+## delete from my_stock where stock_name='stock_name' and writer =[cookyId];
+def delete_my_stock(symbol, cookyId):
     db = cx_Oracle.connect('ksh03003', '1234', 'localhost:1521/orcl')
     cursor = db.cursor()
 
     # 문자열안에 따옴표 포함시키고싶을때 "\'": 백슬래쉬 따옴표
-    cursor.execute("delete from my_stock where stock_name=" + '\'' + symbol + '\'')
+    cursor.execute("delete from my_stock where stock_name=" + '\'' + symbol + '\'' + "and writer=" + '\'' + cookyId +'\'')
 
     cursor.close()
     db.commit()
