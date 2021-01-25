@@ -57,6 +57,7 @@ def login(request):
 
 
         ##  2_ userId 쿠키는 존재하나 로그인은 되지 않는 경우(아이디나 비밀번호가 틀린 경우) => 로그인 화면으로
+        ## 한번 바꿔야할듯 -> 오는 경우가 이미 쿠키에 로그인값들이 전달된 상태에서 다시 로그인창에서 로그인 시도 할 경우 이 쪽으로 오더라
         else:
             return render(request, 'login.html', {'todayIs': todayIs, 'error': 'ID or password is incorrect'} )
 
@@ -103,4 +104,8 @@ def login(request):
 
 
 def logout(request):
-    respone = render(request, '')
+    response = redirect('http://127.0.0.1:8000/')
+    response.delete_cookie('userId')
+    response.delete_cookie('userPwd')
+    auth.logout(request)
+    return response
