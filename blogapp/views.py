@@ -11,6 +11,7 @@ from urllib.request import Request, urlopen
 import asyncio
 from datetime import datetime
 
+from stockWebProgramming2.drawingChart import drawingChart
 from stockWebProgramming2.oracleWork import bringmyStocks, isThere,insertInto_my_stock,delete_my_stock
 
 sampleUrl = 'https://cloud.iexapis.com/stable/stock/aapl/book?token=pk_cc9d0be588704852a3e1b6e3c91b1e65'
@@ -129,6 +130,8 @@ def goStockPage(request, render_to_response=None):
         api_request = requests.get(
             'https://cloud.iexapis.com/stable/stock/' + symbol + '/book?token=pk_cc9d0be588704852a3e1b6e3c91b1e65')
 
+        drawingChart(symbol)
+
 
     ## 1) except: 즐겨찾기 추가 버튼을 눌러 goStockPage를 호출한 경우
     ## (메인페이지에서 눌러 symbol값을 들고오지 않아 api요청이 되지 않을 경우)
@@ -230,4 +233,6 @@ def goStockPage(request, render_to_response=None):
 #
 #     delete_my_stock()
 #     return redirect('goMainPage')
+
+
 
