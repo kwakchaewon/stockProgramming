@@ -3,6 +3,8 @@ from datetime import datetime
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
+from tkinter import messagebox as msg
+from tkinter import Tk
 
 
 # Create your views here.
@@ -90,7 +92,8 @@ def login(request):
 
         ##  4_ 로그인 쿠키가 존재하지 않아 요청받아 로그인을 시도했으나 틀린 경우 => 로그인 창으로
         else:
-            return (request, 'login.html', {'todayIs': todayIs , 'error': 'ID or password is incorrect'} )
+            return render(request, 'wrongLogin.html', {'todayIs': todayIs})
+
 
 
 
