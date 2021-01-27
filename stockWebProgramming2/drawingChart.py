@@ -1,6 +1,7 @@
 import pandas as pd
 import json
 import urllib.request as req
+from pandas import json_normalize
 
 def drawingChart(symbol):
 
@@ -9,8 +10,10 @@ def drawingChart(symbol):
     data = req.urlopen(url).read()
     dataj = json.loads(data.decode('utf-8'))
 
-    tab = pd.DataFrame(dataj)
-    print(tab)
+    tab = json_normalize(dataj["dayCandles"])
 
-    print(dataj)
-    return code
+    newTab=tab[['date', 'tradePrice']]
+    print(newTab)
+
+    newTab= newTab.plot()
+    return dataj
